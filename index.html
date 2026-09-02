@@ -59,8 +59,14 @@
         /* Transparent logo fixes */
         .logo-img { mix-blend-mode: screen; filter: contrast(1.6) brightness(1.1); }
     .logo-independiente-rivadavia, .logo-godoy-cruz { transform: scale(1.4); } 
-        .header-logo { transform: scale(2); transform-origin: left center; }
-      .header-logo-container { width: 180px; height: 60px; overflow: hidden; display: flex; align-items: center; }
+        .header-logo { transform: scale(1.6); transform-origin: left center; }
+        @media (min-width: 768px) {
+            .header-logo { transform: scale(2); }
+        }
+        .header-logo-container { width: 120px; height: 60px; overflow: hidden; display: flex; align-items: center; }
+        @media (min-width: 768px) {
+            .header-logo-container { width: 180px; }
+        }
       </style>
 </head>
 <body class="antialiased selection:bg-secondary-container selection:text-on-secondary min-h-screen flex flex-col bg-background text-on-surface">
@@ -74,9 +80,9 @@
             <a class="text-secondary font-bold hover:bg-surface-container-high transition-colors px-3 py-2 rounded cursor-pointer" onclick="goHome()">Home</a>
             <a class="text-on-surface-variant hover:text-white transition-colors px-3 py-2 rounded cursor-pointer" onclick="document.getElementById('como-funciona-modal').classList.remove('hidden')">Cómo funciona</a>
         </nav>
-        <div class="flex items-center gap-4">
-            <button id="btn-login-admin" class="font-label-sm px-4 py-2 bg-secondary-container text-on-secondary rounded hover:bg-secondary-fixed transition-colors uppercase text-xs tracking-wider opacity-50 hover:opacity-100 mr-2">Admin</button>
-            <button id="btn-login-photo" class="font-label-sm px-4 py-2 border border-outline-variant text-on-surface-variant rounded hover:text-secondary hover:border-secondary transition-colors uppercase text-xs tracking-wider">Acceso Fotógrafos</button>
+        <div class="flex items-center gap-2 md:gap-4 shrink-0 flex-nowrap">
+            <button id="btn-login-admin" class="font-label-sm px-2.5 py-1.5 md:px-4 md:py-2 bg-secondary-container text-on-secondary rounded hover:bg-secondary-fixed transition-colors uppercase text-[10px] md:text-xs tracking-wider opacity-50 hover:opacity-100">Admin</button>
+            <button id="btn-login-photo" class="font-label-sm px-2.5 py-1.5 md:px-4 md:py-2 border border-outline-variant text-on-surface-variant rounded hover:text-secondary hover:border-secondary transition-colors uppercase text-[10px] md:text-xs tracking-wider flex-shrink">Fotógrafos</button>
         </div>
     </header>
 
