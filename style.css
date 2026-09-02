@@ -1,0 +1,73 @@
+/* Tailwind handles the bulk of styling. Only essential custom additions remain. */
+
+:root {
+  --transition: all 0.3s ease;
+}
+
+/* Base custom classes to match the design system intent */
+.bg-stadium-glow {
+  background-color: #061a12;
+  background-image: radial-gradient(circle at top center, rgba(255, 191, 0, 0.1) 0%, rgba(6, 26, 18, 1) 60%);
+}
+
+.text-shadow-glow {
+  text-shadow: 0 0 30px rgba(255, 191, 0, 0.3), 0 0 10px rgba(255, 191, 0, 0.1);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Adjustments for the AI loader */
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Gallery Hover effects for custom dynamic UI */
+.photo-item {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 191, 0, 0.2);
+}
+
+.photo-item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.buy-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 100%);
+  padding: 1rem;
+  text-align: center;
+  transform: translateY(100%);
+  transition: var(--transition);
+}
+
+.photo-item:hover .buy-overlay {
+  transform: translateY(0);
+}
+
+.buy-btn {
+  background-color: #ffbf00;
+  color: #061a12;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  font-family: "Inter", sans-serif;
+}
+
+.buy-btn:hover {
+  background-color: #ffe2ab;
+}

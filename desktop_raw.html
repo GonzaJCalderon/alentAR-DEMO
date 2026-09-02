@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AlentAR - Te encontramos en la tribuna</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed": "#001d32",
+                        "inverse-primary": "#4e6358",
+                        "tertiary-fixed": "#cee5ff",
+                        "surface-tint": "#b5ccbf",
+                        "surface-container-lowest": "#0c0f10",
+                        "on-primary-container": "#6f8579",
+                        "on-background": "#e1e3e4",
+                        "on-surface-variant": "#c2c8c3",
+                        "primary-container": "#061a12",
+                        "primary-fixed": "#d1e8da",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#b5ccbf",
+                        "on-secondary-fixed": "#261a00",
+                        "tertiary-fixed-dim": "#96ccff",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#ffdfa0",
+                        "secondary-fixed-dim": "#fbbc00",
+                        "on-secondary": "#402d00",
+                        "surface-container-highest": "#323536",
+                        "background": "#111415",
+                        "outline-variant": "#424844",
+                        "on-surface": "#e1e3e4",
+                        "inverse-surface": "#e1e3e4",
+                        "surface-container-high": "#282a2b",
+                        "on-primary-fixed-variant": "#374b41",
+                        "on-primary": "#20342b",
+                        "secondary-container": "#ffbf00",
+                        "outline": "#8c928e",
+                        "surface-container-low": "#191c1d",
+                        "surface-container": "#1d2021",
+                        "surface-variant": "#323536",
+                        "surface-bright": "#373a3b",
+                        "inverse-on-surface": "#2e3132",
+                        "on-tertiary-container": "#4b85b6",
+                        "surface-dim": "#111415",
+                        "on-tertiary": "#003353",
+                        "primary": "#b5ccbf",
+                        "on-secondary-container": "#6d5000",
+                        "on-secondary-fixed-variant": "#5c4300",
+                        "tertiary": "#96ccff",
+                        "on-tertiary-fixed-variant": "#004a75",
+                        "surface": "#111415",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#00182a",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#0b1f17",
+                        "secondary": "#ffe2ab"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        "margin-desktop": "48px",
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "unit": "8px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Bebas Neue"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "label-sm": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["40px", { lineHeight: "44px", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "display-lg": ["64px", { lineHeight: "64px", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "28px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["32px", { lineHeight: "36px", fontWeight: "400" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        body {
+            background-color: #061A12;
+            color: #e1e3e4;
+        }
+        .bg-stadium-glow {
+            background: radial-gradient(circle at top center, rgba(255, 191, 0, 0.15) 0%, rgba(6, 26, 18, 1) 70%);
+        }
+        .card-gradient {
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-secondary-container selection:text-on-secondary min-h-screen flex flex-col bg-stadium-glow">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-background dark:bg-background border-b border-outline-variant/20 docked full-width top-0 z-50 flat no shadows">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary dark:text-secondary text-2xl" style="font-variation-settings: 'FILL' 1;">stars</span>
+<div class="text-headline-md font-headline-md text-on-surface dark:text-on-surface [font-weight:700]">Alent<span class="text-secondary-container">AR</span></div>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8 text-label-sm font-label-sm">
+<a class="text-secondary dark:text-secondary font-bold hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Cómo funciona</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Clubes</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Fotógrafos</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-label-sm font-label-sm px-4 py-2 border border-secondary text-secondary rounded hover:bg-secondary/10 transition-colors">Login</button>
+<span class="material-symbols-outlined text-on-surface text-xl cursor-pointer hover:text-secondary transition-colors" data-icon="notifications">notifications</span>
+</div>
+</header>
+<main class="flex-grow pt-[80px]">
+<!-- Hero Section -->
+<section class="relative w-full h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0" data-alt="A sweeping, cinematic view of a massive Argentine football stadium at night. The stadium is packed with cheering fans, illuminated by intensely bright floodlights cutting through a hazy, dramatic atmosphere. The scene is captured in high contrast, emphasizing deep stadium greens and vibrant golden amber accents from the lights and flares. The mood is electric and passionate, focusing on the sheer scale and intensity of professional football." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-5P-FdO-Jq96DpG_nDOTwyoKfRMLkkDw9Xz2zZgyhs5S38zm51g-79mXom1a0MeO2c2FC5tXfEl-WkHwE_BlkyAdnGAID3EZE3uYvWk7_gDQA4JDy_wAgVUuQmzXHy_63Y5_Mo804jl985OmYptVGGXIDM4qkQFAilCQV5foj5TIr-2QVYjngELUdG_7IOdFsz1DZUR7nFWXTVWArcCnFenVy84jDREA0yqIRdPAksIZLccZWkfcR')">
+<div class="absolute inset-0 bg-primary-container/80 backdrop-blur-[2px]"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 text-center flex flex-col items-center px-4 max-w-4xl mx-auto">
+<img alt="AlentAR Logo" class="w-48 h-48 md:w-64 md:h-64 mb-8 object-contain drop-shadow-[0_0_15px_rgba(255,191,0,0.3)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsZQJJyoJukoc2w17uqTvJ5AC63KVf3vu3fPKZt3rZsgweXmLXG6rjGx0M4EggjY6Wa-a8vMxTlcFldSbDSN_-sbOR01ItU6OMGVsS9rLQtVaz3H2F0XnzMbHHn1SM9115OZHDhwTUVgPKni2BrVUcqxE1TA2VDYDQSlPPg8joISuOEzGcb16CbqtOTHsg6gbwQjg2IiR8J8rCGcXnmgm9cmSbtN6vxeKAZFoj4-20tE74Bt96lJOy"/>
+<h1 class="text-display-lg font-display-lg text-on-surface mb-4 leading-tight uppercase">
+                    Te encontramos en la <span class="text-secondary-container">tribuna</span>
+</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-8 max-w-2xl">
+                    Tecnología de reconocimiento facial aplicada a la pasión. Encuentra tus fotos en alta calidad capturadas por los mejores fotógrafos deportivos.
+                </p>
+<div class="flex gap-4 justify-center w-full max-w-md">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-high border-b-2 border-transparent focus:border-secondary-container text-on-surface px-12 py-4 rounded-t-lg outline-none transition-colors text-body-md font-body-md placeholder-on-surface-variant/50" placeholder="Buscar por número de socio o DNI..." type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Clubs Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface uppercase flex items-center gap-3">
+                        Clubes Asociados
+                        <div class="flex text-secondary-container text-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-2">Encuentra tus fotos oficiales de cada partido.</p>
+</div>
+<button class="text-label-sm font-label-sm text-secondary hover:text-secondary-container transition-colors uppercase tracking-widest flex items-center gap-2">
+                    Ver todos
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[300px]">
+<!-- Club Card 1 (Large) -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer lg:col-span-2 lg:row-span-2 bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A highly detailed, cinematic photograph capturing a chaotic and euphoric moment of a football goal celebration in a massive Argentine stadium. The scene features a mix of intense gold and blue colors, with fans leaning over barriers, flares in the background, and a sense of raw, unfiltered passion. The lighting is dramatic, typical of a night match under powerful floodlights, creating deep shadows and bright highlights." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCro_97LwUu8pND9skwj4xAaUc7mFdtCoaNV9XMOvnlACcG5GdITlEZs6rNqCrKBFXov5AoZaHNCedKM50ZF16kemgEA-5UWFxx8YnzUm3jJO6KfEFf5ZFfvywUyxGNIrryNKPua3xFGFm9n-5GuqKJtceceSAYKHA3_pPuGH9GKcDnNB-4dcnwb8X8LqNX-E1shHtns1Zs9yaBFemlLZSS0pLhOdW59DL_TMSd8UisdWMXhe4769IE')"></div>
+<div class="absolute inset-0 card-gradient"></div>
+<div class="absolute inset-0 border border-outline-variant/10 group-hover:border-secondary-container/50 transition-colors rounded-xl z-10"></div>
+<div class="absolute bottom-0 left-0 p-6 z-20 w-full flex justify-between items-end">
+<div>
+<div class="inline-flex items-center gap-1 bg-surface-container-high/80 backdrop-blur-sm px-2 py-1 rounded text-label-sm font-label-sm text-secondary mb-3">
+<span class="material-symbols-outlined text-[14px]">sports_soccer</span>
+                                Liga Profesional
+                            </div>
+<h3 class="text-headline-md font-headline-md text-on-surface uppercase">Boca Juniors</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">La Bombonera - Último partido: Ayer</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface">shield</span>
+</div>
+</div>
+</div>
+<!-- Club Card 2 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A close-up, dramatic shot of a football team's crest engraved on a dark, metallic surface inside a stadium tunnel. The lighting is moody and low-key, with a single, sharp amber spotlight hitting the crest, creating a high-contrast, premium, and intense athletic aesthetic. The background fades into a deep, textured blackness." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlZQRLXVuzggfh4ufzMcKATZCkJ4iXmrJlOY_wqWvF6OhtTaMz6D-wgLQ-5aVOuROb9yq4Lq8wZh-vpxJaq2xXUeCA7wwrSyy5gvwOU6cSMWakfXYHQU0xIra_G94JDpDSEb123AtFUgvprAMLVBHmvkPOEqfpgjoCY9yNbcu7AS0V6oF5pDC0rl3zZH4IHGLBCSOUMuFmBBTzCUc8QulH4CD1nzO-kd6wQ4u1XMr_eZKTxYp4wWFY')"></div>
+<div class="absolute inset-0 card-gradient"></div>
+<div class="absolute inset-0 border border-outline-variant/10 group-hover:border-secondary-container/50 transition-colors rounded-xl z-10"></div>
+<div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+<h3 class="text-headline-md font-headline-md text-on-surface uppercase">River Plate</h3>
+<p class="text-body-md font-body-md text-on-surface-variant text-sm mt-1">1,240 fotos nuevas</p>
+</div>
+</div>
+<!-- Club Card 3 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A wide angle shot of a pristine green football pitch at night, viewed from the upper tiers of a modern stadium. The grass is perfectly striped, illuminated by intensely bright LED floodlights. The seating area is bathed in shadows, creating a stark contrast between the bright playing surface and the dark surroundings. The atmosphere is tense and anticipatory before a major match." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCV1gqJh603ckzl83ZO9bhQInAt0ySJNNHS_JoCG-vQLUw2rmZpta5j5OXrULBnCvcG3IjrMeQNOOYfTCiJ8X0gPDMhL1-JtYbPptCTDIiaCzXRtVljoFmX0Gp0tRI8uQR-_L7wZ3Lf7BKdj9v_5uAO9fOM9wqsA5r3UigKs13UafRWldxihK_wMGW_k1GbugXSWPQj-e4CHQ9mH0aIssUNiO8YH5Rxy7xeOxVxzQycjvqmOY5e3itM')"></div>
+<div class="absolute inset-0 card-gradient"></div>
+<div class="absolute inset-0 border border-outline-variant/10 group-hover:border-secondary-container/50 transition-colors rounded-xl z-10"></div>
+<div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+<h3 class="text-headline-md font-headline-md text-on-surface uppercase">Racing Club</h3>
+<p class="text-body-md font-body-md text-on-surface-variant text-sm mt-1">890 fotos nuevas</p>
+</div>
+</div>
+<!-- Club Card 4 -->
+<div class="group relative rounded-xl overflow-hidden cursor-pointer lg:col-span-2 bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="An artistic, black and white photograph of a passionate football fan in the stands, intensely focused on the game. The only color in the image is a subtle, glowing amber tint applied to the fan's face, simulating the AI facial recognition technology of the AlentAR platform. The background is a blur of other supporters, emphasizing the individual connection to the sport. High contrast, gritty texture." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_s9QJEM4n36rqXWUQ_iU3kKRDOULHxdmS2Bf8_nkQgSAl1Wjv1tN9gt5mfqBwoXUNzrDTIjTkat4PvUcgANw0hYlbLGrvM40dH2KiSY9tHgI9T2rKa7VVonfhA4i-BM0fwc0-Q6cxWc48OaoHHJoxxdtKgFfLWFxtBkDUvXRCVVrbvdIsMcOszSeDOTd6WQwkERea7ZyzGx_B6aQZ9WZ0_AX7OtGGXXJomQTiYutNXqcnBgUBByp_')"></div>
+<div class="absolute inset-0 card-gradient"></div>
+<div class="absolute inset-0 border border-outline-variant/10 group-hover:border-secondary-container/50 transition-colors rounded-xl z-10"></div>
+<div class="absolute bottom-0 left-0 p-6 z-20 w-full flex justify-between items-center">
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface uppercase">Independiente</h3>
+<p class="text-body-md font-body-md text-on-surface-variant text-sm mt-1">Estadio Libertadores de América</p>
+</div>
+<button class="bg-secondary-container text-on-secondary px-6 py-2 rounded text-label-sm font-label-sm uppercase hover:bg-secondary-fixed-dim transition-colors">
+                            Ver Galería
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar for Mobile from JSON -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-safe px-4 bg-surface-container dark:bg-surface-container border-t border-outline-variant/10 shadow-lg docked full-width bottom-0 rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-secondary dark:text-secondary bg-primary-container/30 rounded-full px-4 py-1 hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-label-sm font-label-sm mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined text-[24px]">document_scanner</span>
+<span class="text-label-sm font-label-sm mt-1">Search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined text-[24px]">photo_library</span>
+<span class="text-label-sm font-label-sm mt-1">My Photos</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined text-[24px]">analytics</span>
+<span class="text-label-sm font-label-sm mt-1">Dashboard</span>
+</div>
+</nav>
+</body></html>

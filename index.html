@@ -1,0 +1,579 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AlentAR - Vos pusiste el aliento, nosotros la foto</title>
+    
+    <!-- Tailwind and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <!-- face-api.js -->
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+    <!-- Tailwind Config injected from Stitch -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#b5ccbf",
+                        "primary-fixed": "#d1e8da",
+                        "on-primary": "#20342b",
+                        "primary-container": "#061a12",
+                        "secondary": "#ffe2ab",
+                        "secondary-container": "#ffbf00",
+                        "on-secondary-container": "#6d5000",
+                        "background": "#111415",
+                        "on-background": "#e1e3e4",
+                        "surface": "#111415",
+                        "on-surface": "#e1e3e4",
+                        "surface-variant": "#323536",
+                        "on-surface-variant": "#c2c8c3",
+                        "outline": "#8c928e",
+                        "outline-variant": "#424844",
+                        "surface-container-highest": "#323536",
+                        "surface-container-high": "#282a2b",
+                        "surface-container": "#1d2021",
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Bebas Neue"],
+                        "label-sm": ["Inter"]
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Transparent logo fixes */
+        .logo-img { mix-blend-mode: screen; filter: contrast(1.6) brightness(1.1); }
+    .logo-independiente-rivadavia, .logo-godoy-cruz { transform: scale(1.4); } 
+        .header-logo { transform: scale(2); transform-origin: left center; }
+      .header-logo-container { width: 180px; height: 60px; overflow: hidden; display: flex; align-items: center; }
+      </style>
+</head>
+<body class="antialiased selection:bg-secondary-container selection:text-on-secondary min-h-screen flex flex-col bg-background text-on-surface">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 left-0 w-full flex justify-between items-center px-4 md:px-12 py-3 bg-black/95 backdrop-blur-md border-b border-outline-variant/20 z-50">
+        <div class="flex items-center cursor-pointer header-logo-container" onclick="goHome()">
+            <!-- Use a transparent PNG logo here without the black background square -->
+            <img src="logo_alentar_matrix.png" alt="AlentAR" class="logo-img header-logo h-20 md:h-28 max-w-[200px] w-auto" />
+        </div>
+        <nav class="hidden md:flex items-center gap-8 font-label-sm text-sm">
+            <a class="text-secondary font-bold hover:bg-surface-container-high transition-colors px-3 py-2 rounded cursor-pointer" onclick="goHome()">Home</a>
+            <a class="text-on-surface-variant hover:text-white transition-colors px-3 py-2 rounded cursor-pointer" onclick="document.getElementById('como-funciona-modal').classList.remove('hidden')">Cómo funciona</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <button id="btn-login-admin" class="font-label-sm px-4 py-2 bg-secondary-container text-on-secondary rounded hover:bg-secondary-fixed transition-colors uppercase text-xs tracking-wider opacity-50 hover:opacity-100 mr-2">Admin</button>
+            <button id="btn-login-photo" class="font-label-sm px-4 py-2 border border-outline-variant text-on-surface-variant rounded hover:text-secondary hover:border-secondary transition-colors uppercase text-xs tracking-wider">Acceso Fotógrafos</button>
+        </div>
+    </header>
+
+    <main id="main-content" class="flex-grow pt-[80px]">
+        <!-- EVENTOS SECTION (Home) -->
+        <div id="home-view" class="block">
+            <!-- Hero Sec -->
+            <section class="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 z-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518605368461-1ee7c519c721?w=1920&q=80')">
+                    <div class="absolute inset-0 bg-primary-container/80 backdrop-blur-sm"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+                </div>
+                
+                <div class="relative z-10 text-center flex flex-col items-center px-4 max-w-4xl mx-auto">
+                    <h1 class="font-display-lg text-6xl md:text-8xl text-on-surface mb-4 leading-tight uppercase font-bold text-shadow-glow">
+                        Vos pusiste el aliento, <br class="hidden md:block"/><span class="text-secondary-container">Nosotros la foto</span>
+                    </h1>
+                    <p class="font-body-lg text-lg text-on-surface-variant mb-8 max-w-2xl">
+                        Elegí el partido al que fuiste, subí tu selfie y nuestra Inteligencia Artificial va a encontrar todas las fotos tuyas en milisegundos.
+                    </p>
+                    <button onclick="document.getElementById('events-section').scrollIntoView({behavior: 'smooth'})" class="bg-secondary-container text-on-secondary px-8 py-4 rounded-lg font-label-sm uppercase font-bold tracking-widest text-lg shadow-[0_0_20px_rgba(255,191,0,0.4)] hover:scale-105 transition-transform">Encontrate Ahora</button>
+                </div>
+            </section>
+
+            <!-- Eventos / Partidos -->
+            <section id="events-section" class="max-w-[1440px] mx-auto px-4 md:px-12 py-16 scroll-mt-20">
+                <div class="text-center mb-10">
+                    <h2 class="font-headline-lg text-4xl uppercase mb-2">Seleccioná tu evento</h2>
+                    <p class="text-on-surface-variant">Buscá el club y el partido para ver las galerías disponibles.</p>
+                </div>
+                
+                <!-- Buscador de Eventos / Fechas -->
+                <div class="flex justify-center mb-8">
+                    <div class="relative w-full max-w-lg">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <input type="text" id="search-events-input" placeholder="Buscar por partido, fecha o evento..." class="w-full bg-surface-container border border-outline-variant rounded-full pl-12 pr-4 py-3 text-white focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors" />
+                    </div>
+                </div>
+
+                <div class="flex justify-center flex-wrap gap-4 mb-8" id="club-filters">
+                    <button class="bg-secondary-container text-on-secondary font-bold px-6 py-2 rounded-full uppercase filter-btn" data-club="all">Todos</button>
+                    <button class="bg-surface-container-high border border-outline-variant text-white hover:border-secondary transition-colors px-6 py-2 rounded-full uppercase filter-btn" data-club="independiente-rivadavia">Independiente Riv.</button>
+                    <button class="bg-surface-container-high border border-outline-variant text-white hover:border-secondary transition-colors px-6 py-2 rounded-full uppercase filter-btn" data-club="gimnasia-mendoza">Gimnasia (Mza)</button>
+                    <button class="bg-surface-container-high border border-outline-variant text-white hover:border-secondary transition-colors px-6 py-2 rounded-full uppercase filter-btn" data-club="godoy-cruz">Godoy Cruz</button>
+                    <button class="bg-surface-container-high border border-outline-variant text-white hover:border-secondary transition-colors px-6 py-2 rounded-full uppercase filter-btn" data-club="huracan-las-heras">Huracán Las Heras</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="events-grid">
+                    <!-- Events injected via JS -->
+                </div>
+            </section>
+        </div>
+
+        <!-- FAN VIEW (Especifico al partido) -->
+        <div id="fan-view" class="hidden max-w-[900px] mx-auto px-4 py-12">
+            <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
+                  <button onclick="goHome()" class="flex items-center gap-2 text-on-surface-variant hover:text-white transition-colors uppercase font-bold text-sm shrink-0">
+                      <span class="material-symbols-outlined text-sm">arrow_back</span> Volver a Eventos
+                  </button>
+                  <div class="relative w-full max-w-sm">
+                      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                      <input type="text" id="search-events-input-fan" placeholder="Buscar otros partidos, fechas..." class="w-full bg-surface-container border border-outline-variant rounded-full pl-12 pr-4 py-2 text-white focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors text-sm" />
+                  </div>
+              </div>
+            <div class="text-center mb-8 bg-surface-container p-6 rounded-2xl border border-outline-variant/30 flex flex-col md:flex-row items-center justify-center gap-6">
+                <!-- Escudo del Club inyectado aquí -->
+                <img id="fan-event-logo" src="" alt="Club Logo" class="w-16 h-16 md:w-20 md:h-20 object-contain hidden" />
+                <div class="text-center md:text-left">
+                    <span class="inline-block bg-secondary-container/20 text-secondary px-3 py-1 rounded text-xs font-bold uppercase mb-1" id="fan-event-club">CLUB</span>
+                    <h2 id="fan-event-title" class="font-headline-lg text-4xl uppercase leading-none mb-1">Partido</h2>
+                    <p id="fan-event-date" class="text-on-surface-variant text-sm">Fecha: --</p>
+                </div>
+            </div>
+
+            <div class="bg-surface-container rounded-2xl p-6 md:p-10 border border-outline-variant/30 shadow-2xl relative overflow-hidden">
+                <div id="loader" class="hidden text-center py-12">
+                     <div class="w-16 h-16 border-4 border-outline-variant border-t-secondary-container rounded-full animate-spin mx-auto mb-4"></div>
+                     <p>Cargando IA...</p>
+                </div>
+                
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-headline-md uppercase text-secondary mb-2">Buscate en la tribuna</h3>
+                    <p class="text-on-surface-variant">Nuestra IA va a escanear todas las fotos de este partido.</p>
+                </div>
+
+                <div class="camera-container text-center flex flex-col items-center">
+                    <video id="videoElement" autoplay playsinline class="hidden w-full max-w-sm rounded-xl border-2 border-outline-variant mb-4"></video>
+                    <canvas id="canvasElement" class="hidden"></canvas>
+                    
+                    <button id="start-camera-btn" class="bg-surface-container-highest border border-outline-variant hover:border-secondary text-white px-8 py-4 rounded-xl flex items-center gap-3 transition-colors text-lg">
+                        <span class="material-symbols-outlined">photo_camera</span> Sácate una Selfie
+                    </button>
+                    <button id="take-photo-btn" class="hidden bg-secondary-container text-on-secondary px-8 py-4 rounded-xl font-bold uppercase shadow-[0_0_15px_rgba(255,191,0,0.3)]">
+                        Capturar Selfie
+                    </button>
+                </div>
+
+                <div id="selfie-preview-container" class="hidden flex flex-col items-center mt-6">
+                    <img id="selfie-preview" src="" alt="Selfie" class="w-48 h-48 object-cover rounded-xl border-2 border-secondary mb-6 shadow-lg" />
+                    <div class="flex gap-4">
+                        <button id="search-btn" class="bg-secondary-container text-on-secondary px-8 py-3 rounded-lg font-bold uppercase transition-transform active:scale-95 shadow-md">
+                            Buscar Mis Fotos
+                        </button>
+                        <button id="retake-btn" class="bg-surface-variant text-white px-6 py-3 rounded-lg font-bold transition-colors">Reintentar</button>
+                    </div>
+                </div>
+
+                <h4 id="results-title" class="hidden font-headline-lg text-3xl uppercase mt-12 mb-6 text-center border-t border-outline-variant/30 pt-8"></h4>
+                <div id="fan-results-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+
+        <!-- PHOTOGRAPHER DASHBOARD -->
+        <div id="photographer-view" class="hidden max-w-[1200px] mx-auto px-4 py-8">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-headline-lg uppercase flex items-center gap-3">
+                    <img src="https://ui-avatars.com/api/?name=F+P&background=ffbf00&color=000" class="w-12 h-12 rounded-full">
+                    Dashboard Fotógrafo
+                </h2>
+                <button onclick="goHome()" class="text-on-surface-variant hover:text-white uppercase font-bold text-sm">Cerrar Sesión</button>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-surface-container p-6 rounded-2xl border border-outline-variant/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary-container/10 to-transparent pointer-events-none"></div>
+                    <div class="flex items-center gap-2 text-secondary mb-2">
+                        <span class="material-symbols-outlined">payments</span> <span class="font-bold text-sm tracking-wider uppercase">Saldo Acumulado</span>
+                    </div>
+                    <div class="text-5xl font-bold font-headline-md text-white">$42.500<span class="text-2xl text-on-surface-variant font-body-md">.00</span></div>
+                    <div class="text-sm text-[#4caf50] mt-4 flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-sm">trending_up</span> +12% vs mes anterior</div>
+                </div>
+                
+                <div class="bg-surface-container p-6 rounded-2xl border border-outline-variant/20">
+                    <div class="flex items-center gap-2 text-on-surface-variant mb-2">
+                        <span class="material-symbols-outlined">shopping_cart</span> <span class="font-bold text-sm tracking-wider uppercase">Ventas de Hoy</span>
+                    </div>
+                    <div class="text-5xl font-bold font-headline-md text-white">14</div>
+                    <div class="text-sm text-on-surface-variant mt-4 font-medium">Equivalente a $3.500</div>
+                </div>
+
+                <div class="bg-surface-container p-6 rounded-2xl border border-outline-variant/20">
+                    <div class="flex items-center gap-2 text-on-surface-variant mb-2">
+                        <span class="material-symbols-outlined">visibility</span> <span class="font-bold text-sm tracking-wider uppercase">Vistas Totales (Hoy)</span>
+                    </div>
+                    <div class="text-5xl font-bold font-headline-md text-white">1.2K</div>
+                    <div class="text-sm text-[#4caf50] mt-4 flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-sm">trending_up</span> Alta demanda actual</div>
+                </div>
+            </div>
+
+            <!-- Main Workspace -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Upload & Active Events (2 cols on large screens) -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Upload Box -->
+                    <div class="bg-surface-container rounded-2xl border border-outline-variant/20 p-8">
+                        <h3 class="text-xl font-headline-md uppercase text-secondary mb-4">Subir Lote de Fotos</h3>
+                        <div class="mb-4">
+                            <label class="block text-sm text-on-surface-variant font-bold mb-2 uppercase">Asignar a Evento:</label>
+                            <select id="photographer-event-select" class="w-full bg-surface-container-high border border-outline-variant rounded-lg px-4 py-3 text-white focus:border-secondary focus:ring-1 focus:ring-secondary outline-none">
+                                <option value="indep-riv-vs-racing">Indep. Rivadavia vs Racing</option>
+                                <option value="godoy-cruz-vs-santelmo">Godoy Cruz vs San Telmo</option>
+                                <option value="gimnasia-mza-vs-talleres">Gimnasia (Mza) vs Talleres</option><option value="huracan-lh-vs-juventud">Huracán LH vs Juventud Antoniana</option>
+                            </select>
+                        </div>
+                        <div id="upload-zone" class="border-2 border-dashed border-outline-variant hover:border-secondary hover:bg-secondary-container/5 transition-all p-12 text-center rounded-xl cursor-pointer">
+                            <span class="material-symbols-outlined text-5xl text-secondary-container mb-3 drop-shadow-md">cloud_upload</span>
+                            <p class="text-lg font-bold">Soltar lote de fotos (o clic acá)</p>
+                            <p class="text-on-surface-variant text-sm mt-2">La IA detectará y emparejará rostros al vuelo</p>
+                            <input type="file" id="photo-upload" multiple accept="image/jpeg, image/png" class="hidden" />
+                        </div>
+                        <!-- Uploading Feedback Gallery -->
+                        <div id="photographer-gallery" class="grid grid-cols-3 sm:grid-cols-4 gap-4 mt-6"></div>
+                        <div class="mt-6 flex justify-end">
+                            <button onclick="alert('Cobertura finalizada. Las fotos ya están disponibles en la plataforma para los hinchas con tu marca de agua.')" class="bg-[#4caf50] hover:bg-[#388e3c] text-white px-8 py-3 rounded-xl font-bold uppercase transition-colors shadow-md flex items-center gap-2">
+                                <span class="material-symbols-outlined">check_circle</span> Finalizar Cobertura
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Mockup (Rendimiento) -->
+                    <div class="bg-surface-container rounded-2xl border border-outline-variant/20 p-6">
+                        <h3 class="text-xl font-headline-md uppercase mb-6 border-b border-outline-variant/20 pb-3">Rendimiento (Últimos 7 días)</h3>
+                        <div class="h-48 flex items-end justify-between gap-2 px-2">
+                             <div class="w-full bg-surface-container-highest rounded-t-sm h-[40%] relative"><div class="absolute inset-x-0 bottom-full h-[20%] bg-secondary-container rounded-t-sm"></div></div>
+                             <div class="w-full bg-surface-container-highest rounded-t-sm h-[60%] relative"><div class="absolute inset-x-0 bottom-full h-[35%] bg-secondary-container rounded-t-sm"></div></div>
+                             <div class="w-full bg-surface-container-highest rounded-t-sm h-[50%] relative"><div class="absolute inset-x-0 bottom-full h-[15%] bg-secondary-container rounded-t-sm"></div></div>
+                             <div class="w-full bg-tertiary-container border border-tertiary/20 rounded-t-sm h-[80%] relative"><div class="absolute inset-x-0 bottom-full h-[50%] bg-secondary-container rounded-t-sm"></div></div>
+                             <div class="w-full bg-surface-container-highest rounded-t-sm h-[30%] relative"><div class="absolute inset-x-0 bottom-full h-[10%] bg-secondary-container rounded-t-sm"></div></div>
+                             <div class="w-full bg-surface-container-highest rounded-t-sm h-[85%] relative"><div class="absolute inset-x-0 bottom-full h-[40%] bg-secondary-container rounded-t-sm"></div></div>
+                             <div class="w-full bg-surface-container-highest rounded-t-sm h-[65%] relative"><div class="absolute inset-x-0 bottom-full h-[30%] bg-secondary-container rounded-t-sm"></div></div>
+                        </div>
+                        <div class="flex justify-between mt-3 text-xs text-on-surface-variant font-bold uppercase">
+                            <span>Lun</span><span>Mar</span><span>Mié</span><span class="text-white">Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Side Panel (Mis Partidos) -->
+                <div>
+                     <div class="bg-surface-container rounded-2xl border border-outline-variant/20 p-6 h-full">
+                         <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-headline-md uppercase flex items-center gap-2"><span class="material-symbols-outlined text-secondary-container">stadium</span> Mis Partidos</h3>
+                            <a href="#" class="text-secondary text-sm font-bold uppercase hover:underline">Ver todos</a>
+                         </div>
+                         <div class="space-y-4" id="ph-mis-partidos-list">
+                             <!-- Item -->
+                             <div class="bg-surface-container-highest rounded-xl p-3 flex gap-4 items-center">
+                                 <div class="w-20 h-20 rounded-lg bg-cover bg-center shrink-0 relative" style="background-image: url('https://images.unsplash.com/photo-1518605368461-1ee7c519c721?w=200&q=80')">
+                                     <div class="absolute bottom-1 left-1 bg-black/80 px-1 text-[10px] text-white rounded font-bold">120 fotos</div>
+                                 </div>
+                                 <div>
+                                     <h4 class="font-bold text-white leading-tight mb-1">Indep. Rivadavia vs Gimnasia</h4>
+                                     <p class="text-xs text-on-surface-variant mb-2">Clásico Mendocino • 15 Oct</p>
+                                     <div class="flex items-center gap-2 text-xs">
+                                         <span class="bg-[#1b2f21] text-[#4caf50] px-2 py-0.5 rounded border border-[#4caf50]/20 font-bold uppercase tracking-wider">Activo</span>
+                                         <span class="text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sell</span> 24 ventas</span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <!-- Item -->
+                             <div class="bg-surface-container-highest rounded-xl p-3 flex gap-4 items-center">
+                                 <div class="w-20 h-20 rounded-lg bg-cover bg-center shrink-0 relative" style="background-image: url('https://images.unsplash.com/photo-1508344928928-7137b29de216?w=200&q=80')">
+                                     <div class="absolute bottom-1 left-1 bg-black/80 px-1 text-[10px] text-white rounded font-bold">85 fotos</div>
+                                 </div>
+                                 <div>
+                                     <h4 class="font-bold text-white leading-tight mb-1">Godoy Cruz vs River</h4>
+                                     <p class="text-xs text-on-surface-variant mb-2">Liga Profesional • 08 Oct</p>
+                                     <div class="flex items-center gap-2 text-xs">
+                                         <span class="bg-surface-variant text-on-surface px-2 py-0.5 rounded border border-outline-variant font-bold uppercase tracking-wider">Procesando IA</span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <!-- Item -->
+                             <div class="bg-surface-container-highest rounded-xl p-3 flex gap-4 items-center border border-dashed border-outline-variant/50 opacity-70">
+                                 <div class="w-20 h-20 rounded-lg bg-surface-variant shrink-0 flex items-center justify-center">
+                                     <span class="material-symbols-outlined text-outline">image</span>
+                                 </div>
+                                 <div>
+                                     <h4 class="font-bold text-white leading-tight mb-1">Huracán LH vs San Martín</h4>
+                                     <p class="text-xs text-on-surface-variant">Federal A • Hoy</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+            
+        </div>
+    
+<!-- ADMIN DASHBOARD -->
+        <div id="admin-view" class="hidden max-w-[1200px] mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 pb-4 border-b border-outline-variant/30 text-white gap-4">
+                <h2 class="text-3xl font-headline-lg uppercase flex items-center gap-3">
+                    <span class="material-symbols-outlined text-4xl text-primary">admin_panel_settings</span>
+                    Panel Superadmin
+                </h2>
+                <button onclick="goHome()" class="text-on-surface-variant hover:text-white uppercase font-bold text-sm bg-surface-container px-4 py-2 rounded">Volver / Cerrar Sesión</button>
+            </div>
+
+            <!-- Admin Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+                <div class="bg-surface-container rounded-2xl p-6 border-l-4 border-primary shadow-lg">
+                    <p class="text-on-surface-variant text-sm font-bold uppercase tracking-wide mb-1">Ventas Globales</p>
+                    <p class="text-4xl text-white font-headline-lg">$342.500</p>
+                    <p class="text-xs text-[#4caf50] mt-2">+15% este mes</p>
+                </div>
+                <div class="bg-surface-container rounded-2xl p-6 border-l-4 border-secondary shadow-lg">
+                    <p class="text-on-surface-variant text-sm font-bold uppercase tracking-wide mb-1">Fotos Subidas Totales</p>
+                    <p class="text-4xl text-white font-headline-lg">15,409</p>
+                </div>
+                <div class="bg-surface-container rounded-2xl p-6 border-l-4 border-error shadow-lg">
+                    <p class="text-on-surface-variant text-sm font-bold uppercase tracking-wide mb-1">Fotógrafos Activos</p>
+                    <p class="text-4xl text-white font-headline-lg">14</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Crear Eventos -->
+                <div class="bg-surface-container rounded-2xl p-8 shadow-xl">
+                    <h3 class="text-xl font-headline-md uppercase text-secondary mb-6 flex items-center gap-2"><span class="material-symbols-outlined">add_circle</span> Crear Evento y Asignar</h3>
+                    <form id="admin-create-event-form" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase text-on-surface-variant font-bold mb-1">Club Local</label>
+                                <input type="text" id="admin-local" placeholder="Ej. Boca Jrs" class="w-full bg-surface-container-high border border-outline-variant rounded p-2 text-white" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase text-on-surface-variant font-bold mb-1">Club Visitante</label>
+                                <input type="text" id="admin-visitante" placeholder="Ej. River Plate" class="w-full bg-surface-container-high border border-outline-variant rounded p-2 text-white" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase text-on-surface-variant font-bold mb-1">Fecha</label>
+                                <input type="date" id="admin-fecha" class="w-full bg-surface-container-high border border-outline-variant rounded p-2 text-white" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase text-on-surface-variant font-bold mb-1">Liga / División</label>
+                                <input type="text" id="admin-liga" placeholder="Liga Profesional" class="w-full bg-surface-container-high border border-outline-variant rounded p-2 text-white" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase text-on-surface-variant font-bold mb-1">Asignar Fotógrafos a este evento</label>
+                            <!-- Simulate multi-select photographer -->
+                            <div class="flex flex-wrap gap-2 mb-2 p-3 bg-surface-container-highest border border-outline-variant/50 rounded">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" checked class="accent-secondary w-4 h-4"> Juan Perez (Cancha)</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" checked class="accent-secondary w-4 h-4"> Maria Lopez (Platea Alta)</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" class="accent-secondary w-4 h-4"> Roberto Carlos (General)</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-secondary-container hover:bg-secondary-fixed text-on-secondary font-bold uppercase py-3 rounded-lg mt-2 transition-colors">Crear y Notificar a Fotógrafos</button>
+                    </form>
+                </div>
+                
+                <!-- Rendimientos -->
+                <div class="bg-surface-container rounded-2xl p-8 shadow-xl">
+                    <h3 class="text-xl font-headline-md uppercase text-secondary mb-6 flex items-center gap-2"><span class="material-symbols-outlined">trending_up</span> Rendimientos por Fotógrafo</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead>
+                                <tr class="text-on-surface-variant border-b border-outline-variant/30 uppercase text-xs">
+                                    <th class="py-3 px-2 font-bold">Fotógrafo</th>
+                                    <th class="py-3 px-2 font-bold">Partidos Cubiertos</th>
+                                    <th class="py-3 px-2 font-bold">Fotos Subidas</th>
+                                    <th class="py-3 px-2 font-bold">Generado (Total)</th>
+                                    <th class="py-3 px-2 font-bold">Split AlentAR</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-white divide-y divide-outline-variant/20">
+                                <tr>
+                                    <td class="py-3 px-2 font-bold flex items-center gap-2"><img src="https://ui-avatars.com/api/?name=J+P&background=333&color=fff" class="w-6 h-6 rounded-full"> Juan Perez</td>
+                                    <td class="py-3 px-2">12</td>
+                                    <td class="py-3 px-2">4,350</td>
+                                    <td class="py-3 px-2 font-bold text-[#4caf50]">$ 112,000</td>
+                                    <td class="py-3 px-2 text-on-surface-variant">$ 22,400</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-2 font-bold flex items-center gap-2"><img src="https://ui-avatars.com/api/?name=M+L&background=333&color=fff" class="w-6 h-6 rounded-full"> Maria Lopez</td>
+                                    <td class="py-3 px-2">8</td>
+                                    <td class="py-3 px-2">2,100</td>
+                                    <td class="py-3 px-2 font-bold text-[#4caf50]">$ 75,500</td>
+                                    <td class="py-3 px-2 text-on-surface-variant">$ 15,100</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-2 font-bold flex items-center gap-2"><img src="https://ui-avatars.com/api/?name=R+C&background=333&color=fff" class="w-6 h-6 rounded-full"> Roberto C.</td>
+                                    <td class="py-3 px-2">15</td>
+                                    <td class="py-3 px-2">8,950</td>
+                                    <td class="py-3 px-2 font-bold text-[#4caf50]">$ 155,000</td>
+                                    <td class="py-3 px-2 text-on-surface-variant">$ 31,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </main>
+
+    <footer class="text-center py-10 mt-10 border-t border-outline-variant/20 bg-black">
+        <div class="flex justify-center mb-6 opacity-80 hover:opacity-100 transition-opacity">
+            <img src="logo_alentar_matrix.png" alt="AlentAR" class="logo-img h-40 md:h-64 w-auto" />
+        </div>
+        <p class="text-on-surface-variant max-w-2xl mx-auto text-sm px-4">
+            <strong>Privacidad garantizada:</strong> Las selfies utilizadas para la búsqueda son procesadas localmente en el navegador durante esta demo. No guardamos tus datos biométricos.
+        </p>
+        <p class="text-on-surface-variant/50 text-sm mt-4">&copy; 2026 AlentAR. Demo técnica comercial.</p>
+    </footer>
+
+    <!-- Mock Mercado Pago Checkout Modal -->
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="bg-surface rounded-2xl w-full max-w-sm overflow-hidden border border-outline-variant shadow-2xl relative">
+            <button class="close-modal absolute top-3 right-3 text-white bg-black/20 hover:bg-black/40 rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                &times;
+            </button>
+            <div class="bg-[#009ee3] text-white p-6 text-center">
+                <h3 class="font-bold text-xl mb-1">Mercado Pago Mock</h3>
+                <p class="opacity-80 text-sm">Proceso de compra de foto oficial</p>
+            </div>
+            <div class="p-6 text-center bg-surface-container">
+                <div class="relative overflow-hidden rounded-lg mb-4 border border-outline-variant/20 shadow-md aspect-[3/4]">
+                      <img id="checkout-preview" src="" alt="Preview" class="w-full h-full object-cover pointer-events-none" />
+                      <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-evenly opacity-30 mix-blend-overlay rotate-[-30deg] scale-150">
+                          <span class="text-4xl font-black text-white px-2">ALENTAR DEMO</span>
+                          <span class="text-4xl font-black text-white px-2">ALENTAR DEMO</span>
+                          <span class="text-4xl font-black text-white px-2">ALENTAR DEMO</span>
+                          <span class="text-4xl font-black text-white px-2">ALENTAR DEMO</span>
+                          <span class="text-4xl font-black text-white px-2">ALENTAR DEMO</span>
+                      </div>
+                  </div>
+                <div class="flex justify-between items-center py-4 border-y border-outline-variant/30 mb-6">
+                    <span class="text-on-surface font-medium">Foto Alta Calidad Sin Marcas</span>
+                    <strong class="text-xl text-white">$1.500 ARS</strong>
+                </div>
+                <button id="simulate-pay-btn" class="w-full bg-[#009ee3] hover:bg-[#007cc0] text-white font-bold py-4 rounded-xl transition-colors text-lg mb-3 shadow-[0_4px_14px_0_rgba(0,158,227,0.39)] uppercase">
+                    Pagar y Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Como Funciona Modal -->
+    <div id="como-funciona-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-surface border border-outline-variant/30 rounded-2xl max-w-2xl w-full p-6 md:p-8 relative shadow-2xl">
+            <button onclick="document.getElementById('como-funciona-modal').classList.add('hidden')" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h2 class="font-headline-md text-3xl tracking-wide text-secondary mb-6 border-b border-outline-variant/20 pb-4">El Modelo AlentAR</h2>
+            <div class="space-y-6 text-on-surface-variant text-body-md">
+                <div class="flex gap-4">
+                    <span class="material-symbols-outlined text-4xl text-tertiary">photo_camera</span>
+                    <div>
+                        <h4 class="font-bold text-white mb-1">1. Fotógrafos en la Tribuna</h4>
+                        <p>Suben fotos asignándolas a un partido específico desde su dashboard.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <span class="material-symbols-outlined text-4xl text-primary">face</span>
+                    <div>
+                        <h4 class="font-bold text-white mb-1">2. Búsqueda del Hincha</h4>
+                        <p>Los hinchas acceden al partido y se sacan una selfie. La IA cruza los datos al instante.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <span class="material-symbols-outlined text-4xl text-secondary-container">shopping_cart</span>
+                    <div>
+                        <h4 class="font-bold text-white mb-1">3. Compra Segura</h4>
+                        <p>Los resultados se muestran con marca de agua comercial. Al comprarla, obtienen la foto original y el fotógrafo cobra comisión.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center pt-6 border-t border-outline-variant/20">
+                <button onclick="document.getElementById('como-funciona-modal').classList.add('hidden')" class="bg-secondary text-on-secondary px-8 py-3 rounded-full font-bold uppercase text-sm tracking-wider hover:bg-secondary-fixed transition-colors">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+<!-- FLOATING CART BUTTON -->
+<div id="floating-cart" class="fixed bottom-6 right-6 z-40 hidden">
+    <button onclick="toggleCartModal()" class="bg-secondary text-on-secondary w-16 h-16 rounded-full shadow-[0_5px_20px_rgba(255,191,0,0.4)] flex justify-center items-center relative hover:scale-110 transition-transform">
+        <span class="material-symbols-outlined text-3xl">shopping_cart</span>
+        <span id="cart-counter" class="absolute -top-1 -right-1 bg-error text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-background">0</span>
+    </button>
+</div>
+
+<!-- CART MODAL -->
+<div id="cart-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleCartModal()"></div>
+    <div class="absolute top-0 right-0 h-full w-full max-w-sm bg-surface-container shadow-2xl flex flex-col transform transition-transform border-l border-outline-variant/30">
+        <div class="flex items-center justify-between p-6 border-b border-outline-variant/30">
+            <h3 class="font-headline-md text-2xl text-white uppercase flex items-center gap-2"><span class="material-symbols-outlined text-secondary">shopping_cart</span> Tu Carrito</h3>
+            <button onclick="toggleCartModal()" class="text-on-surface-variant hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+        </div>
+        
+        <div id="cart-items-container" class="flex-grow p-6 overflow-y-auto space-y-4">
+            <!-- Items go here -->
+            <div class="text-center text-on-surface-variant py-10">Tu carrito está vacío</div>
+        </div>
+        
+        <div class="p-6 border-t border-outline-variant/30 bg-surface-container-highest">
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-on-surface-variant text-sm">
+                    <span>Subtotal (<span id="cart-qty">0</span> fotos)</span>
+                    <span id="cart-subtotal"></body></span>
+                </div>
+                <div id="cart-discount-row" class="flex justify-between text-[#4caf50] text-sm font-bold hidden">
+                    <span>Descuento (Promo 3+ fotos)</span>
+                    <span id="cart-discount">-</body></span>
+                </div>
+                <div class="flex justify-between text-white text-xl font-bold pt-2 border-t border-outline-variant/30 mt-2">
+                    <span>Total</span>
+                    <span id="cart-total"></body></span>
+                </div>
+            </div>
+            
+            <button id="btn-checkout-cart" onclick="openMercadoPagoFromCart()" class="w-full bg-[#009ee3] hover:bg-[#007cc0] disabled:bg-surface-variant disabled:text-on-surface-variant disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-colors text-lg shadow-[0_4px_14px_0_rgba(0,158,227,0.39)] uppercase" disabled>
+                Ir a Pagar
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
