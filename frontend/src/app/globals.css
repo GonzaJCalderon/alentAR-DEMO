@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.logo-img {
+  mix-blend-mode: screen;
+  filter: contrast(1.6) brightness(1.1);
+}
+
+.text-shadow-glow {
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+}
+
+/* Prevent context-menu easy saving on gallery previews */
+.protected-preview {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
